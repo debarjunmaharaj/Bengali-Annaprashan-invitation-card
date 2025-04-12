@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>অন্নপ্রাশন নিমন্ত্রণ | Annaprashan Invitation</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        
+        .card-container {
+            width: 600px;
+            height: 400px;
+            perspective: 1200px;
+        }
+        
+        .card {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 1s;
+            transform-style: preserve-3d;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+        }
+        
+        .card.flipped {
+            transform: rotateY(180deg);
+        }
+        
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 12px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        
+        .front {
+            background: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+            color: #333;
+            text-align: center;
+        }
+        
+        .back {
+            background: linear-gradient(45deg, #a18cd1 0%, #fbc2eb 100%);
+            color: #333;
+            transform: rotateY(180deg);
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #4a235a;
+        }
+        
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+        
+        .highlight {
+            color: #8e44ad;
+            font-weight: 700;
+        }
+        
+        .ornament {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            opacity: 0.6;
+        }
+        
+        .ornament1 {
+            top: 20px;
+            left: 20px;
+            background: radial-gradient(circle, #f9d423 0%, #ff4e50 100%);
+            border-radius: 50%;
+            transform: scale(0.6);
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .ornament2 {
+            bottom: 30px;
+            right: 30px;
+            background: radial-gradient(circle, #00c6fb 0%, #005bea 100%);
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            animation: float 7s ease-in-out infinite;
+        }
+        
+        .ornament3 {
+            top: 40px;
+            right: 40px;
+            background: radial-gradient(circle, #ffc3a0 0%, #ffafbd 100%);
+            clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+            animation: float 5s ease-in-out infinite;
+        }
+        
+        .ornament4 {
+            bottom: 40px;
+            left: 40px;
+            background: radial-gradient(circle, #a1c4fd 0%, #c2e9fb 100%);
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .baby-icon {
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, #fff 60%, transparent 60%);
+            border-radius: 50%;
+            position: relative;
+            margin: 20px 0;
+        }
+        
+        .baby-icon::before {
+            content: "👶";
+            font-size: 50px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .date-time {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 15px 25px;
+            border-radius: 50px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .invitation-text {
+            font-style: italic;
+            font-weight: 500;
+            margin: 15px 0;
+        }
+        
+        .border-design {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: 10px solid transparent;
+            border-image: linear-gradient(45deg, gold, #ff758c, #ff7eb3, gold) 1;
+            pointer-events: none;
+            border-radius: 8px;
+        }
+        
+        .glow {
+            text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #ff00de, 0 0 20px #ff00de;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        .sparkles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+        
+        .sparkle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background-color: white;
+            box-shadow: 0 0 10px 2px gold;
+            animation: sparkle-animation 2s linear infinite;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(5deg);
+            }
+            100% {
+                transform: translateY(0) rotate(0deg);
+            }
+        }
+        
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #ff00de, 0 0 20px #ff00de;
+            }
+            to {
+                text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #ff00de, 0 0 40px #ff00de;
+            }
+        }
+        
+        @keyframes sparkle-animation {
+            0% {
+                opacity: 0;
+                transform: translateY(0) scale(0);
+            }
+            50% {
+                opacity: 1;
+                transform: translateY(-20px) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-40px) scale(0);
+            }
+        }
+        
+        .address {
+            margin-top: 20px;
+            font-style: normal;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 10px 20px;
+            border-radius: 10px;
+        }
+        
+        .sweets-decor {
+            position: absolute;
+            font-size: 24px;
+            animation: float 4s ease-in-out infinite;
+        }
+        
+        .sweets1 {
+            top: 20px;
+            left: 80px;
+        }
+        
+        .sweets2 {
+            bottom: 30px;
+            right: 80px;
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container">
+        <div class="card">
+            <div class="card-face front">
+                <div class="border-design"></div>
+                <div class="ornament ornament1"></div>
+                <div class="ornament ornament2"></div>
+                <div class="sweets-decor sweets1">🍬</div>
+                <div class="sweets-decor sweets2">🍭</div>
+                
+                <h1 class="glow">শুভ অন্নপ্রাশন</h1>
+                <div class="baby-icon"></div>
+                <h2>চিরায়ু শর্মা</h2>
+                <p class="invitation-text">আমাদের ছোট্ট সোনামণির অন্নপ্রাশন অনুষ্ঠানে আপনাকে সপরিবারে আমন্ত্রণ জানাচ্ছি</p>
+                
+                <div class="date-time">
+                    <p><span class="highlight">তারিখ:</span> শনিবার, ১২ই এপ্রিল, ২০২৫</p>
+                    <p><span class="highlight">সময়:</span> সকাল ১১টা থেকে দুপুর ২টা</p>
+                </div>
+            </div>
+            
+            <div class="card-face back">
+                <div class="border-design"></div>
+                <div class="ornament ornament3"></div>
+                <div class="ornament ornament4"></div>
+                <div class="sweets-decor sweets1">🍡</div>
+                <div class="sweets-decor sweets2">🍮</div>
+                
+                <h2>আয়োজক</h2>
+                <p>শ্রী অনিল কুমার শর্মা ও শ্রীমতী সুমিতা শর্মা</p>
+                
+                <div class="address">
+                    <p><span class="highlight">স্থান:</span> ভগবতী বাটি</p>
+                    <p>৪৫/২, হরিশচন্দ্র রোড</p>
+                    <p>কলকাতা - ৭০০০৩৫</p>
+                </div>
+                
+                <p class="invitation-text" style="margin-top: 20px;">আপনার উপস্থিতি আমাদের সৌভাগ্য</p>
+                <p>যোগাযোগ: +৯১ ৯৮৭৬৫ ৪৩২১০</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="sparkles" id="sparkles"></div>
+    
+    <script>
+        // Card flip effect
+        const card = document.querySelector('.card');
+        let isFlipped = false;
+        
+        function flipCard() {
+            isFlipped = !isFlipped;
+            if (isFlipped) {
+                card.classList.add('flipped');
+            } else {
+                card.classList.remove('flipped');
+            }
+        }
+        
+        // Auto flip every 5 seconds
+        setInterval(flipCard, 5000);
+        
+        // Manual flip on click
+        card.addEventListener('click', () => {
+            flipCard();
+        });
+        
+        // Create sparkles
+        const sparklesContainer = document.getElementById('sparkles');
+        
+        function createSparkle() {
+            const sparkle = document.createElement('div');
+            sparkle.classList.add('sparkle');
+            
+            // Random position
+            const posX = Math.random() * window.innerWidth;
+            const posY = Math.random() * window.innerHeight;
+            
+            sparkle.style.left = `${posX}px`;
+            sparkle.style.top = `${posY}px`;
+            
+            // Random size
+            const size = Math.random() * 5 + 2;
+            sparkle.style.width = `${size}px`;
+            sparkle.style.height = `${size}px`;
+            
+            // Random color
+            const colors = ['#ffcc00', '#ff69b4', '#00ccff', '#ff6347', '#9370db'];
+            const randomColorIndex = Math.floor(Math.random() * colors.length);
+            sparkle.style.backgroundColor = colors[randomColorIndex];
+            sparkle.style.boxShadow = `0 0 10px 2px ${colors[randomColorIndex]}`;
+            
+            // Random animation duration
+            const duration = Math.random() * 2 + 1;
+            sparkle.style.animationDuration = `${duration}s`;
+            
+            sparklesContainer.appendChild(sparkle);
+            
+            // Remove sparkle after animation completes
+            setTimeout(() => {
+                sparkle.remove();
+            }, duration * 1000);
+        }
+        
+        // Create sparkles at intervals
+        setInterval(createSparkle, 300);
+        
+        // Create initial sparkles
+        for (let i = 0; i < 20; i++) {
+            setTimeout(createSparkle, Math.random() * 1000);
+        }
+    </script>
+</body>
+</html>
